@@ -1,0 +1,16 @@
+# VXM Apache helpers (optional — shared hosting)
+Options -Indexes
+
+# Error documents
+ErrorDocument 404 /404.php
+ErrorDocument 403 /403.php
+ErrorDocument 500 /500.php
+
+# Protect sensitive paths
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^config/ - [F,L]
+  RewriteRule ^includes/ - [F,L]
+  RewriteRule ^storage/ - [F,L]
+  RewriteRule ^migrations/ - [F,L]
+</IfModule>

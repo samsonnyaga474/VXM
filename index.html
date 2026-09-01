@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="VXM - Complete daily tasks, earn rewards, refer others and manage your earnings from one simple platform." />
+  <meta name="theme-color" content="#030712" />
+  <meta property="og:title" content="VXM | Turn Your Time Into Earnings" />
+  <meta property="og:description" content="Join VXM, complete eligible daily tasks, earn rewards, invite others and manage your earnings." />
+  <meta property="og:type" content="website" />
+  <title>VXM | Turn Your Time Into Earnings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="assets/css/vxm.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="vxm-nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.jpg" alt="VXM" onerror="this.style.display='none'" />
+        <span>VXM</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="levels.html">Levels</a>
+        <a href="earn.html">Earn</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Login</a>
+        <a href="register.html" class="btn btn-primary">Get Started</a>
+      </div>
+      <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="active">Home</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="levels.html">Levels</a>
+    <a href="earn.html">Earn</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <div class="mobile-menu-actions">
+      <a href="login.html" class="btn btn-ghost btn-block">Login</a>
+      <a href="register.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-glow hero-glow-1"></div>
+      <div class="hero-glow hero-glow-2"></div>
+      <div class="hero-grid"></div>
+    </div>
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+        <div class="hero-content reveal">
+          <div class="hero-badge">
+            <span class="dot"></span>
+            Digital Earning Platform
+          </div>
+          <h1 class="hero-title">
+            Turn Your Time<br />
+            <span class="gradient-text">Into Earnings.</span>
+          </h1>
+          <p class="hero-desc">
+            Join VXM, complete eligible daily reel tasks, earn rewards,
+            invite others and manage your earnings from one simple platform.
+          </p>
+          <div class="hero-actions">
+            <a href="register.html" class="btn btn-primary btn-lg">
+              Start Earning <i class="bi bi-arrow-up-right"></i>
+            </a>
+            <a href="#how-it-works" class="btn btn-outline btn-lg">
+              How It Works <i class="bi bi-play-circle"></i>
+            </a>
+          </div>
+          <div class="hero-note">
+            <i class="bi bi-shield-check"></i>
+            <span>Transparent platform rules and account-based earnings</span>
+          </div>
+        </div>
+        <div class="hero-visual reveal">
+          <div class="float-card main">
+            <div class="label">Available Balance</div>
+            <div class="value">KES 0.00</div>
+            <div class="sub">
+              <div>
+                <div class="label" style="margin:0">Today's Earnings</div>
+                <strong class="text-success">+ KES 0.00</strong>
+              </div>
+              <div class="text-success"><i class="bi bi-arrow-up"></i></div>
+            </div>
+          </div>
+          <div class="float-mini task">
+            <i class="bi bi-play-fill"></i>
+            <div>
+              <div class="text-muted" style="font-size:0.75rem">Daily Task</div>
+              <strong>Watch Reel</strong>
+            </div>
+          </div>
+          <div class="float-mini ref">
+            <i class="bi bi-people-fill"></i>
+            <div>
+              <div class="text-muted" style="font-size:0.75rem">Referrals</div>
+              <strong>+ Rewards</strong>
+            </div>
+          </div>
+          <div class="float-mini mpesa">
+            <i class="bi bi-phone"></i>
+            <div>
+              <div class="text-muted" style="font-size:0.75rem">Withdrawal</div>
+              <strong>M-Pesa</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid reveal">
+        <div class="stat-item">
+          <div class="stat-num">10K+</div>
+          <div class="stat-label">Active Users*</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Tasks Completed*</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Platform Access</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Fast</div>
+          <div class="stat-label">M-Pesa Withdrawals*</div>
+        </div>
+      </div>
+      <p class="stats-note">* Illustrative figures. Actual platform metrics depend on live activity and rules.</p>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">How It Works</div>
+        <h2>Four simple steps to start earning</h2>
+        <p class="text-secondary mt-2">Create an account, choose a level, complete tasks, and withdraw eligible rewards according to platform rules.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-num">01</div>
+          <div class="step-icon"><i class="bi bi-person-plus"></i></div>
+          <h3>Create Account</h3>
+          <p>Register your VXM account using your basic information and a secure password.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num">02</div>
+          <div class="step-icon"><i class="bi bi-layers"></i></div>
+          <h3>Choose Your Level</h3>
+          <p>Select an available earning level according to the configured VXM rules.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num">03</div>
+          <div class="step-icon"><i class="bi bi-play-btn"></i></div>
+          <h3>Complete Tasks</h3>
+          <p>Access your eligible daily reel or advertisement tasks through your account.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num">04</div>
+          <div class="step-icon"><i class="bi bi-wallet2"></i></div>
+          <h3>Earn & Withdraw</h3>
+          <p>Eligible rewards are recorded in your wallet and can later be withdrawn according to the rules.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Levels Preview -->
+  <section class="section" style="background: var(--bg-base);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Earning Levels</div>
+        <h2>Choose your <span class="gradient-text">earning level</span></h2>
+        <p class="text-secondary mt-2">Current levels: Starter (KES 500), Growth (KES 1,500), Pro (KES 3,500). Daily task rewards are designed around target ranges of approximately KES 20 / 60 / 140. These are configurable business settings, not guaranteed returns.</p>
+      </div>
+      <div class="levels-grid">
+        <div class="level-card reveal">
+          <div class="level-top">
+            <div>
+              <div class="level-label">Level 01</div>
+              <h3>Entry</h3>
+            </div>
+            <div class="level-icon"><i class="bi bi-stars"></i></div>
+          </div>
+          <div class="level-price">KES <span style="font-size:1rem;color:var(--text-muted)">—</span></div>
+          <p class="text-secondary" style="font-size:0.9rem;">Starter access to daily tasks. Exact price and rewards are set by the platform administrator.</p>
+          <ul class="level-features">
+            <li><i class="bi bi-check-circle-fill"></i> Access to entry-level tasks</li>
+            <li><i class="bi bi-check-circle-fill"></i> Daily task eligibility</li>
+            <li><i class="bi bi-check-circle-fill"></i> Wallet & transaction history</li>
+            <li><i class="bi bi-check-circle-fill"></i> Referral participation</li>
+          </ul>
+          <a href="register.html" class="btn btn-outline btn-block">Get Started</a>
+        </div>
+        <div class="level-card featured reveal">
+          <div class="level-top">
+            <div>
+              <div class="level-label">Level 02</div>
+              <h3>Growth</h3>
+            </div>
+            <div class="level-icon"><i class="bi bi-lightning-charge"></i></div>
+          </div>
+          <div class="level-price">KES <span style="font-size:1rem;color:var(--text-muted)">—</span></div>
+          <p class="text-secondary" style="font-size:0.9rem;">Expanded task access and higher reward potential. Final values are configured in the admin panel.</p>
+          <ul class="level-features">
+            <li><i class="bi bi-check-circle-fill"></i> Higher task rewards</li>
+            <li><i class="bi bi-check-circle-fill"></i> More daily task slots</li>
+            <li><i class="bi bi-check-circle-fill"></i> Priority support options</li>
+            <li><i class="bi bi-check-circle-fill"></i> Stronger referral benefits</li>
+          </ul>
+          <a href="register.html" class="btn btn-primary btn-block">Get Started</a>
+        </div>
+        <div class="level-card reveal">
+          <div class="level-top">
+            <div>
+              <div class="level-label">Level 03</div>
+              <h3>Pro</h3>
+            </div>
+            <div class="level-icon"><i class="bi bi-gem"></i></div>
+          </div>
+          <div class="level-price">KES <span style="font-size:1rem;color:var(--text-muted)">—</span></div>
+          <p class="text-secondary" style="font-size:0.9rem;">Maximum task access and earning capacity available under current platform rules.</p>
+          <ul class="level-features">
+            <li><i class="bi bi-check-circle-fill"></i> Full task catalogue</li>
+            <li><i class="bi bi-check-circle-fill"></i> Highest configured rewards</li>
+            <li><i class="bi bi-check-circle-fill"></i> Premium referral rates</li>
+            <li><i class="bi bi-check-circle-fill"></i> Full wallet features</li>
+          </ul>
+          <a href="register.html" class="btn btn-outline btn-block">Get Started</a>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <a href="levels.html" class="btn btn-ghost">View all levels <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why VXM -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Why VXM</div>
+        <h2>Built for clarity and control</h2>
+        <p class="text-secondary mt-2">A focused platform for task-based earnings, referrals, and wallet management with transparent rules.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="bi bi-wallet2"></i></div>
+          <h3>Account Wallet</h3>
+          <p>Every eligible reward is recorded in your wallet with a clear transaction history you can review at any time.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="bi bi-phone"></i></div>
+          <h3>M-Pesa Withdrawals</h3>
+          <p>Request withdrawals to M-Pesa according to platform rules. Status updates are visible in your account.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="bi bi-people"></i></div>
+          <h3>Referral System</h3>
+          <p>Invite others using your referral link. Eligible referral rewards are credited according to the configured rates.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="bi bi-list-check"></i></div>
+          <h3>Daily Tasks</h3>
+          <p>Complete eligible daily tasks such as reels or advertisements. Task availability depends on your active level.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="bi bi-shield-lock"></i></div>
+          <h3>Secure Sessions</h3>
+          <p>Authentication, CSRF protection, and secure session handling protect your account and financial actions.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="bi bi-headset"></i></div>
+          <h3>Support Tickets</h3>
+          <p>Open support tickets from your dashboard when you need help. Responses appear in your notifications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-bg"></div>
+    <div class="container">
+      <div class="cta-box reveal">
+        <div class="section-tag" style="justify-content:center;">Get Started</div>
+        <h2>Ready to turn time into earnings?</h2>
+        <p>Create your VXM account, choose a level, and start completing eligible tasks under the platform rules.</p>
+        <div class="cta-actions">
+          <a href="register.html" class="btn btn-primary btn-lg">Create Account</a>
+          <a href="how-it-works.html" class="btn btn-ghost btn-lg">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <img src="images/logo.jpg" alt="VXM" onerror="this.style.display='none'" />
+            <span>VXM</span>
+          </a>
+          <p>A digital earning platform for completing tasks, growing through referrals, and managing your wallet with clarity.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <a href="how-it-works.html">How It Works</a>
+          <a href="levels.html">Levels</a>
+          <a href="earn.html">Earn</a>
+          <a href="about.html">About</a>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <a href="login.html">Login</a>
+          <a href="register.html">Register</a>
+          <a href="forgot-password.html">Forgot Password</a>
+          <a href="contact.html">Support</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="terms.html">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 VXM. All rights reserved.</span>
+        <span>Built for transparent digital earnings.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <style>
+    @media (max-width: 900px) {
+      .hero .container > div { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</body>
+</html>

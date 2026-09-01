@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Explore VXM earning levels, daily tasks, rewards and referral opportunities." />
+  <meta name="theme-color" content="#030712" />
+  <title>VXM | Earning Levels</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="assets/css/vxm.css" />
+</head>
+<body>
+  <nav class="vxm-nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="images/logo.jpg" alt="VXM" onerror="this.style.display='none'" /><span>VXM</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="levels.html" class="active">Levels</a>
+        <a href="earn.html">Earn</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Login</a>
+        <a href="register.html" class="btn btn-primary">Get Started</a>
+      </div>
+      <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu"><i class="bi bi-list"></i></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a><a href="how-it-works.html">How It Works</a><a href="levels.html" class="active">Levels</a>
+    <a href="earn.html">Earn</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+    <div class="mobile-menu-actions">
+      <a href="login.html" class="btn btn-ghost btn-block">Login</a>
+      <a href="register.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+
+  <section class="hero" style="min-height:auto;padding-top:calc(var(--nav-height)+4rem);padding-bottom:3rem;">
+    <div class="hero-bg"><div class="hero-glow hero-glow-1"></div><div class="hero-grid"></div></div>
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:0;">
+        <div class="section-tag">Earning Levels</div>
+        <h1>Select an available <span class="gradient-text">VXM level</span></h1>
+        <p class="text-secondary mt-2" style="max-width:560px;margin-left:auto;margin-right:auto;">
+          VXM levels are designed to organize available tasks, rewards and referral opportunities according to the platform's configured rules. Before selecting a level, review the available tasks, joining requirements and applicable rewards.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="levels-grid">
+        <div class="level-card reveal">
+          <div class="level-top">
+            <div>
+              <div class="level-label">Level 01</div>
+              <h3>Entry</h3>
+            </div>
+            <div class="level-icon"><i class="bi bi-stars"></i></div>
+          </div>
+          <div class="level-price">KES <span style="font-size:1rem;color:var(--text-muted)">—</span></div>
+          <p class="text-secondary" style="font-size:0.9rem;margin-bottom:1rem;">Starter access to daily tasks. Exact price, task list and rewards are configured by the platform administrator.</p>
+          <ul class="level-features">
+            <li><i class="bi bi-check-circle-fill"></i> Access to entry-level daily tasks</li>
+            <li><i class="bi bi-check-circle-fill"></i> Wallet and transaction history</li>
+            <li><i class="bi bi-check-circle-fill"></i> Referral participation</li>
+            <li><i class="bi bi-check-circle-fill"></i> Support tickets</li>
+          </ul>
+          <a href="register.html" class="btn btn-outline btn-block">Get Started</a>
+        </div>
+        <div class="level-card featured reveal">
+          <div class="level-top">
+            <div>
+              <div class="level-label">Level 02</div>
+              <h3>Growth</h3>
+            </div>
+            <div class="level-icon"><i class="bi bi-lightning-charge"></i></div>
+          </div>
+          <div class="level-price">KES <span style="font-size:1rem;color:var(--text-muted)">—</span></div>
+          <p class="text-secondary" style="font-size:0.9rem;margin-bottom:1rem;">Expanded task access and higher reward potential under the configured rules.</p>
+          <ul class="level-features">
+            <li><i class="bi bi-check-circle-fill"></i> Higher task rewards</li>
+            <li><i class="bi bi-check-circle-fill"></i> More daily task slots</li>
+            <li><i class="bi bi-check-circle-fill"></i> Stronger referral benefits</li>
+            <li><i class="bi bi-check-circle-fill"></i> Full wallet features</li>
+          </ul>
+          <a href="register.html" class="btn btn-primary btn-block">Get Started</a>
+        </div>
+        <div class="level-card reveal">
+          <div class="level-top">
+            <div>
+              <div class="level-label">Level 03</div>
+              <h3>Pro</h3>
+            </div>
+            <div class="level-icon"><i class="bi bi-gem"></i></div>
+          </div>
+          <div class="level-price">KES <span style="font-size:1rem;color:var(--text-muted)">—</span></div>
+          <p class="text-secondary" style="font-size:0.9rem;margin-bottom:1rem;">Maximum task access and earning capacity available under current platform rules.</p>
+          <ul class="level-features">
+            <li><i class="bi bi-check-circle-fill"></i> Full task catalogue</li>
+            <li><i class="bi bi-check-circle-fill"></i> Highest configured rewards</li>
+            <li><i class="bi bi-check-circle-fill"></i> Premium referral rates</li>
+            <li><i class="bi bi-check-circle-fill"></i> Priority support options</li>
+          </ul>
+          <a href="register.html" class="btn btn-outline btn-block">Get Started</a>
+        </div>
+      </div>
+      <p class="text-center text-muted mt-4" style="font-size:0.85rem;">
+        Current prices: Starter KES 500, Growth KES 1,500, Pro KES 3,500. Referral reward is 5% of a qualifying level purchase. Logged-in users select a level from the dashboard after depositing funds. These are configurable settings, not guaranteed investment returns.
+      </p>
+      <div class="text-center mt-3">
+        <a href="levels.php" class="btn btn-ghost">Open levels in dashboard <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg-base);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">How levels work</div>
+        <h2>From selection to activity</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-num">01</div>
+          <div class="step-icon"><i class="bi bi-person-plus"></i></div>
+          <h3>Create account</h3>
+          <p>Create your VXM account and explore the platform.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num">02</div>
+          <div class="step-icon"><i class="bi bi-layers"></i></div>
+          <h3>Select a level</h3>
+          <p>Select an available VXM level according to the configured rules.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num">03</div>
+          <div class="step-icon"><i class="bi bi-play-btn"></i></div>
+          <h3>Access tasks</h3>
+          <p>Access eligible daily tasks associated with your level.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num">04</div>
+          <div class="step-icon"><i class="bi bi-wallet2"></i></div>
+          <h3>Track & refer</h3>
+          <p>Monitor activity through your wallet and use your referral opportunity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-bg"></div>
+    <div class="container">
+      <div class="cta-box reveal">
+        <h2>Ready to choose a level?</h2>
+        <p>Create an account and explore the VXM platform. Level selection and task access follow the official rules set by the administrator.</p>
+        <div class="cta-actions">
+          <a href="register.html" class="btn btn-primary btn-lg">Create Account</a>
+          <a href="how-it-works.html" class="btn btn-ghost btn-lg">How It Works</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo"><img src="images/logo.jpg" alt="VXM" onerror="this.style.display='none'" /><span>VXM</span></a>
+          <p>A digital earning platform built around daily tasks, referral opportunities, wallet management and eligible withdrawals.</p>
+        </div>
+        <div class="footer-col"><h4>Platform</h4><a href="how-it-works.html">How It Works</a><a href="levels.html">Levels</a><a href="earn.html">Earn</a><a href="about.html">About</a></div>
+        <div class="footer-col"><h4>Account</h4><a href="login.html">Login</a><a href="register.html">Register</a><a href="forgot-password.html">Forgot Password</a><a href="contact.html">Support</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 VXM. All rights reserved.</span>
+        <span>Earning rules, rewards and platform features are subject to applicable VXM terms.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

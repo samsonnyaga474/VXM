@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact VXM support for help with accounts, tasks, withdrawals, and referrals." />
+  <meta name="theme-color" content="#030712" />
+  <title>Contact & Support | VXM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="assets/css/vxm.css" />
+</head>
+<body>
+  <nav class="vxm-nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="images/logo.jpg" alt="VXM" onerror="this.style.display='none'" /><span>VXM</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="levels.html">Levels</a>
+        <a href="earn.html">Earn</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Login</a>
+        <a href="register.html" class="btn btn-primary">Get Started</a>
+      </div>
+      <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu"><i class="bi bi-list"></i></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a><a href="how-it-works.html">How It Works</a><a href="levels.html">Levels</a>
+    <a href="earn.html">Earn</a><a href="about.html">About</a><a href="contact.html" class="active">Contact</a>
+    <div class="mobile-menu-actions">
+      <a href="login.html" class="btn btn-ghost btn-block">Login</a>
+      <a href="register.html" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+
+  <section class="hero" style="min-height:auto;padding-top:calc(var(--nav-height)+4rem);padding-bottom:3rem;">
+    <div class="hero-bg"><div class="hero-glow hero-glow-1"></div><div class="hero-grid"></div></div>
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:0;">
+        <div class="section-tag">Support</div>
+        <h1>How can we help?</h1>
+        <p class="text-secondary mt-2" style="max-width:520px;margin-left:auto;margin-right:auto;">
+          Get assistance with accounts, tasks, referrals, wallet activity, and withdrawals. Registered users can also open tickets from the dashboard.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="features-grid" style="margin-bottom:3rem;">
+        <div class="feature-card reveal"><div class="feature-icon"><i class="bi bi-person"></i></div><h3>Account</h3><p>Login issues, password resets, and profile updates.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon"><i class="bi bi-list-check"></i></div><h3>Tasks</h3><p>Questions about daily task eligibility and completion.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon"><i class="bi bi-people"></i></div><h3>Referrals</h3><p>Referral links, tracking, and reward status.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon"><i class="bi bi-wallet2"></i></div><h3>Wallet</h3><p>Balance questions and transaction history.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon"><i class="bi bi-cash-stack"></i></div><h3>Withdrawals</h3><p>Withdrawal requests, status, and M-Pesa delivery.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon"><i class="bi bi-layers"></i></div><h3>Levels</h3><p>Level selection, upgrades, and access rules.</p></div>
+      </div>
+      <div class="card reveal" style="max-width:560px;margin:0 auto;">
+        <h2 style="font-size:1.35rem;margin-bottom:0.5rem;">Send a message</h2>
+        <p class="text-secondary mb-3" style="font-size:0.95rem;">Fill in the form with clear details. Registered users should prefer the in-app support tickets for faster account-linked help.</p>
+        <form action="contact.html" method="post" id="contactForm">
+          <div class="form-group"><label class="form-label" for="name">Full name</label><input class="form-control" type="text" id="name" name="name" required placeholder="Your name" /></div>
+          <div class="form-group"><label class="form-label" for="email">Email</label><input class="form-control" type="email" id="email" name="email" required placeholder="you@example.com" /></div>
+          <div class="form-group"><label class="form-label" for="subject">Subject</label>
+            <select class="form-control" id="subject" name="subject" required>
+              <option value="">Select a topic</option>
+              <option value="account">Account</option><option value="tasks">Tasks</option><option value="referrals">Referrals</option>
+              <option value="wallet">Wallet</option><option value="withdrawals">Withdrawals</option><option value="levels">Levels</option><option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label" for="message">Message</label><textarea class="form-control" id="message" name="message" rows="5" required placeholder="Describe your question clearly..."></textarea></div>
+          <button type="submit" class="btn btn-primary btn-block">Send message</button>
+          <p class="form-hint mt-2">This public form is for general inquiries. For account-specific issues, log in and open a support ticket.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><a href="index.html" class="nav-logo"><img src="images/logo.jpg" alt="VXM" onerror="this.style.display='none'" /><span>VXM</span></a><p>A digital earning platform for completing tasks, growing through referrals, and managing your wallet with clarity.</p></div>
+        <div class="footer-col"><h4>Platform</h4><a href="how-it-works.html">How It Works</a><a href="levels.html">Levels</a><a href="earn.html">Earn</a><a href="about.html">About</a></div>
+        <div class="footer-col"><h4>Account</h4><a href="login.html">Login</a><a href="register.html">Register</a><a href="forgot-password.html">Forgot Password</a><a href="contact.html">Support</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a></div>
+      </div>
+      <div class="footer-bottom"><span>&copy; 2026 VXM. All rights reserved.</span><span>Built for transparent digital earnings.</span></div>
+    </div>
+  </footer>
+  <script src="assets/js/main.js"></script>
+  <script>
+  document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Thank you for your message. For the fastest help with your account, wallet, or withdrawals, please log in and open a support ticket from your dashboard. You can also email fam500473@gmail.com or call 0715385073.');
+    this.reset();
+  });
+  </script>
+</body>
+</html>
