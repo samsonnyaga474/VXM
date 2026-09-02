@@ -1,0 +1,130 @@
+<svg width="1600" height="700" viewBox="0 0 1600 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="700">
+    <stop stop-color="#020617"/>
+    <stop offset="0.5" stop-color="#08143B"/>
+    <stop offset="1" stop-color="#170B3E"/>
+  </linearGradient>
+  <linearGradient id="grad" x1="100" y1="100" x2="1500" y2="600">
+    <stop stop-color="#1769FF"/>
+    <stop offset="1" stop-color="#7C2DFF"/>
+  </linearGradient>
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="12"/>
+  </filter>
+</defs>
+
+<rect width="1600" height="700" rx="30" fill="url(#bg)"/>
+
+<!-- background glow -->
+<circle cx="300" cy="350" r="180" fill="#1769FF" opacity=".12" filter="url(#glow)"/>
+<circle cx="1300" cy="350" r="180" fill="#7C2DFF" opacity=".12" filter="url(#glow)"/>
+
+<text x="800" y="80" text-anchor="middle"
+      fill="white" font-family="Arial" font-size="34"
+      font-weight="700" letter-spacing="5">
+  THE VXM EARNING FLOW
+</text>
+
+<text x="800" y="120" text-anchor="middle"
+      fill="#8295C8" font-family="Arial" font-size="17"
+      letter-spacing="2">
+  FROM ACCOUNT CREATION TO WALLET WITHDRAWAL
+</text>
+
+<!-- connector -->
+<path d="M180 350 H1420"
+      stroke="url(#grad)"
+      stroke-width="5"
+      stroke-linecap="round"
+      opacity=".45"/>
+
+<!-- node 1 -->
+<g transform="translate(90 250)">
+  <circle cx="90" cy="100" r="72" fill="#071333" stroke="#1769FF" stroke-width="3"/>
+  <circle cx="90" cy="100" r="52" fill="#1769FF" opacity=".12"/>
+  <text x="90" y="92" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="30" font-weight="700">01</text>
+  <text x="90" y="122" text-anchor="middle" fill="#9CB0E8"
+        font-family="Arial" font-size="14">ACCOUNT</text>
+  <text x="90" y="180" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="19" font-weight="700">REGISTER</text>
+</g>
+
+<!-- node 2 -->
+<g transform="translate(315 250)">
+  <circle cx="90" cy="100" r="72" fill="#071333" stroke="#2D78FF" stroke-width="3"/>
+  <circle cx="90" cy="100" r="52" fill="#2D78FF" opacity=".12"/>
+  <text x="90" y="92" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="30" font-weight="700">02</text>
+  <text x="90" y="122" text-anchor="middle" fill="#9CB0E8"
+        font-family="Arial" font-size="14">FUND</text>
+  <text x="90" y="180" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="19" font-weight="700">DEPOSIT</text>
+</g>
+
+<!-- node 3 -->
+<g transform="translate(540 250)">
+  <circle cx="90" cy="100" r="72" fill="#071333" stroke="#426BFF" stroke-width="3"/>
+  <circle cx="90" cy="100" r="52" fill="#426BFF" opacity=".12"/>
+  <text x="90" y="92" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="30" font-weight="700">03</text>
+  <text x="90" y="122" text-anchor="middle" fill="#9CB0E8"
+        font-family="Arial" font-size="14">LEVEL</text>
+  <text x="90" y="180" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="19" font-weight="700">ACTIVATE</text>
+</g>
+
+<!-- node 4 -->
+<g transform="translate(765 250)">
+  <circle cx="90" cy="100" r="72" fill="#071333" stroke="#5955FF" stroke-width="3"/>
+  <circle cx="90" cy="100" r="52" fill="#5955FF" opacity=".12"/>
+  <text x="90" y="92" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="30" font-weight="700">04</text>
+  <text x="90" y="122" text-anchor="middle" fill="#9CB0E8"
+        font-family="Arial" font-size="14">TASKS</text>
+  <text x="90" y="180" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="19" font-weight="700">COMPLETE</text>
+</g>
+
+<!-- node 5 -->
+<g transform="translate(990 250)">
+  <circle cx="90" cy="100" r="72" fill="#071333" stroke="#7042FF" stroke-width="3"/>
+  <circle cx="90" cy="100" r="52" fill="#7042FF" opacity=".12"/>
+  <text x="90" y="92" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="30" font-weight="700">05</text>
+  <text x="90" y="122" text-anchor="middle" fill="#9CB0E8"
+        font-family="Arial" font-size="14">REWARDS</text>
+  <text x="90" y="180" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="19" font-weight="700">EARN</text>
+</g>
+
+<!-- node 6 -->
+<g transform="translate(1215 250)">
+  <circle cx="90" cy="100" r="72" fill="#071333" stroke="#7C2DFF" stroke-width="3"/>
+  <circle cx="90" cy="100" r="52" fill="#7C2DFF" opacity=".12"/>
+  <text x="90" y="92" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="30" font-weight="700">06</text>
+  <text x="90" y="122" text-anchor="middle" fill="#B8A8EA"
+        font-family="Arial" font-size="14">WALLET</text>
+  <text x="90" y="180" text-anchor="middle" fill="white"
+        font-family="Arial" font-size="19" font-weight="700">WITHDRAW</text>
+</g>
+
+<!-- referral branch -->
+<path d="M1080 520 C1080 580 1305 580 1305 470"
+      stroke="#8B5CFF" stroke-width="3"
+      stroke-dasharray="8 10" opacity=".7"/>
+
+<text x="1190" y="625" text-anchor="middle"
+      fill="#A98BFF" font-family="Arial" font-size="17"
+      letter-spacing="2">
+  REFERRALS → BONUS
+</text>
+
+<text x="800" y="675" text-anchor="middle"
+      fill="#5F73A9" font-family="Arial" font-size="14"
+      letter-spacing="3">
+  VXM • TASKS • WALLET • REFERRALS • M-PESA
+</text>
+</svg>

@@ -1,0 +1,134 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900">
+    <stop stop-color="#020617"/>
+    <stop offset=".5" stop-color="#08143B"/>
+    <stop offset="1" stop-color="#170B3E"/>
+  </linearGradient>
+  <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#1769FF"/>
+    <stop offset="1" stop-color="#3B82F6"/>
+  </linearGradient>
+  <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#6366F1"/>
+    <stop offset="1" stop-color="#A855F7"/>
+  </linearGradient>
+  <linearGradient id="mix" x1="300" y1="300" x2="1300" y2="600">
+    <stop stop-color="#1769FF"/>
+    <stop offset="1" stop-color="#8B5CFF"/>
+  </linearGradient>
+  <filter id="blur">
+    <feGaussianBlur stdDeviation="35"/>
+  </filter>
+  <filter id="shadow">
+    <feDropShadow dx="0" dy="20" stdDeviation="25" flood-color="#000000" flood-opacity=".5"/>
+  </filter>
+</defs>
+
+<rect width="1600" height="900" rx="32" fill="url(#bg)"/>
+
+<circle cx="300" cy="450" r="230" fill="#1769FF" opacity=".12" filter="url(#blur)"/>
+<circle cx="1300" cy="450" r="230" fill="#7C2DFF" opacity=".12" filter="url(#blur)"/>
+
+<text x="800" y="80" text-anchor="middle"
+      fill="white" font-family="Arial" font-size="38"
+      font-weight="700" letter-spacing="5">
+  THE VXM ECOSYSTEM
+</text>
+
+<text x="800" y="120" text-anchor="middle"
+      fill="#8194C7" font-family="Arial" font-size="17"
+      letter-spacing="2">
+  ONE PLATFORM • MULTIPLE EARNING SYSTEMS
+</text>
+
+<!-- central core -->
+<g filter="url(#shadow)">
+  <circle cx="800" cy="455" r="155" fill="#071333" stroke="url(#mix)" stroke-width="4"/>
+  <circle cx="800" cy="455" r="125" fill="#0A1740" stroke="#FFFFFF" stroke-opacity=".08"/>
+
+  <path d="M720 380L755 440L792 395L825 440L865 365L925 380L875 445L830 445L795 415L765 445L720 380Z"
+        fill="url(#mix)"/>
+  <path d="M770 455L885 350"
+        stroke="#4D7CFF" stroke-width="13"
+        stroke-linecap="round"/>
+
+  <text x="800" y="510" text-anchor="middle"
+        fill="white" font-family="Arial"
+        font-size="48" font-weight="800"
+        letter-spacing="8">VXM</text>
+
+  <text x="800" y="542" text-anchor="middle"
+        fill="#8FA2D3" font-family="Arial"
+        font-size="14" letter-spacing="3">
+    PLATFORM CORE
+  </text>
+</g>
+
+<!-- connection lines -->
+<g stroke="url(#mix)" stroke-width="3" opacity=".65">
+  <path d="M650 385L470 255"/>
+  <path d="M650 455L420 455"/>
+  <path d="M650 525L470 655"/>
+  <path d="M950 385L1130 255"/>
+  <path d="M950 455L1180 455"/>
+  <path d="M950 525L1130 655"/>
+</g>
+
+<!-- cards -->
+<g filter="url(#shadow)">
+  <!-- Account -->
+  <rect x="150" y="165" width="320" height="150" rx="24" fill="#071333" stroke="#1769FF" stroke-opacity=".5"/>
+  <circle cx="205" cy="220" r="27" fill="#1769FF" opacity=".18"/>
+  <text x="205" y="229" text-anchor="middle" fill="#5B9BFF" font-family="Arial" font-size="26">01</text>
+  <text x="250" y="215" fill="white" font-family="Arial" font-size="21" font-weight="700">ACCOUNTS</text>
+  <text x="250" y="245" fill="#8194C7" font-family="Arial" font-size="14">Registration • Login • Security</text>
+  <text x="250" y="270" fill="#8194C7" font-family="Arial" font-size="14">Sessions • Password Recovery</text>
+
+  <!-- Tasks -->
+  <rect x="120" y="380" width="320" height="150" rx="24" fill="#071333" stroke="#2D78FF" stroke-opacity=".5"/>
+  <circle cx="175" cy="435" r="27" fill="#2D78FF" opacity=".18"/>
+  <text x="175" y="444" text-anchor="middle" fill="#6FA4FF" font-family="Arial" font-size="26">02</text>
+  <text x="220" y="430" fill="white" font-family="Arial" font-size="21" font-weight="700">DAILY TASKS</text>
+  <text x="220" y="460" fill="#8194C7" font-family="Arial" font-size="14">Level limits • Rewards</text>
+  <text x="220" y="485" fill="#8194C7" font-family="Arial" font-size="14">Duplicate protection • Ledger</text>
+
+  <!-- Referrals -->
+  <rect x="150" y="595" width="320" height="150" rx="24" fill="#071333" stroke="#4C6FFF" stroke-opacity=".5"/>
+  <circle cx="205" cy="650" r="27" fill="#4C6FFF" opacity=".18"/>
+  <text x="205" y="659" text-anchor="middle" fill="#8295FF" font-family="Arial" font-size="26">03</text>
+  <text x="250" y="645" fill="white" font-family="Arial" font-size="21" font-weight="700">REFERRALS</text>
+  <text x="250" y="675" fill="#8194C7" font-family="Arial" font-size="14">Referral codes • Bonuses</text>
+  <text x="250" y="700" fill="#8194C7" font-family="Arial" font-size="14">Qualification • Payment status</text>
+
+  <!-- Wallet -->
+  <rect x="1130" y="165" width="320" height="150" rx="24" fill="#071333" stroke="#7042FF" stroke-opacity=".5"/>
+  <circle cx="1185" cy="220" r="27" fill="#7042FF" opacity=".18"/>
+  <text x="1185" y="229" text-anchor="middle" fill="#A17BFF" font-family="Arial" font-size="26">04</text>
+  <text x="1230" y="215" fill="white" font-family="Arial" font-size="21" font-weight="700">WALLET</text>
+  <text x="1230" y="245" fill="#8194C7" font-family="Arial" font-size="14">Credits • Debits • Balances</text>
+  <text x="1230" y="270" fill="#8194C7" font-family="Arial" font-size="14">Transaction ledger • Locking</text>
+
+  <!-- Payments -->
+  <rect x="1160" y="380" width="320" height="150" rx="24" fill="#071333" stroke="#7C2DFF" stroke-opacity=".5"/>
+  <circle cx="1215" cy="435" r="27" fill="#7C2DFF" opacity=".18"/>
+  <text x="1215" y="444" text-anchor="middle" fill="#B083FF" font-family="Arial" font-size="26">05</text>
+  <text x="1260" y="430" fill="white" font-family="Arial" font-size="21" font-weight="700">M-PESA</text>
+  <text x="1260" y="460" fill="#8194C7" font-family="Arial" font-size="14">STK Push • Callbacks</text>
+  <text x="1260" y="485" fill="#8194C7" font-family="Arial" font-size="14">Deposits • Receipts</text>
+
+  <!-- Admin -->
+  <rect x="1130" y="595" width="320" height="150" rx="24" fill="#071333" stroke="#8B5CFF" stroke-opacity=".5"/>
+  <circle cx="1185" cy="650" r="27" fill="#8B5CFF" opacity=".18"/>
+  <text x="1185" y="659" text-anchor="middle" fill="#B99AFF" font-family="Arial" font-size="26">06</text>
+  <text x="1230" y="645" fill="white" font-family="Arial" font-size="21" font-weight="700">ADMIN</text>
+  <text x="1230" y="675" fill="#8194C7" font-family="Arial" font-size="14">Users • Tasks • Levels</text>
+  <text x="1230" y="700" fill="#8194C7" font-family="Arial" font-size="14">Deposits • Withdrawals • Support</text>
+</g>
+
+<text x="800" y="840" text-anchor="middle"
+      fill="#566B9F" font-family="Arial" font-size="14"
+      letter-spacing="4">
+  SECURE • MODULAR • CONFIGURABLE • PHP + MYSQL
+</text>
+</svg>
