@@ -202,6 +202,46 @@ function notify_user(int $userId, string $type, string $title, string $message, 
 }
 
 /**
+ * Admin audit trail (best-effort; never breaks the main action)
+ */
+function admin_audit(
+    int $adminId,
+    string $action,
+    ?string $targetType = null,
+    ?int $targetId = null,
+    ?array $before = null,
+    ?array $after = null
+): void {
+    try {
+        $db = db();
+        $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+        $beforeJson = $before !== null ? json_encode($before) : null;
+        $afterJson = $after !== null ? json_encode($after) : null;
+        $stmt = $db->prepare(
+            "INSERT INTO admin_audit_log (admin_id, action, target_type, target_id, before_state, after_state, ip_address)
+             VALUES (?, ?, ?, ?, ?, ?, ?)"
+        );
+        if (!$stmt) {
+            return;
+        }
+        $stmt->bind_param(
+            'ississs',
+            $adminId,
+            $action,
+            $targetType,
+            $targetId,
+            $beforeJson,
+            $afterJson,
+            $ip
+        );
+        $stmt->execute();
+        $stmt->close();
+    } catch (Throwable $e) {
+        error_log('VXM admin_audit failed: ' . $e->getMessage());
+    }
+}
+
+/**
  * Simple redirect
  */
 function redirect(string $url, int $code = 302): void {

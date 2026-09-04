@@ -59,8 +59,16 @@ try {
 
     $db->commit();
 
+    admin_audit($admin_id, 'withdrawal_approve', 'withdrawal', $withdrawal_id, [
+        'status' => 'pending',
+        'amount' => $amount,
+        'user_id' => $user_id,
+    ], [
+        'status' => 'approved',
+    ]);
+
     notify_user($user_id, 'withdrawal_approved', 'Withdrawal Approved',
-        'Your withdrawal of ' . money($amount) . ' has been approved and is being processed.');
+        'Your withdrawal of ' . money($amount) . ' has been approved. Payout is processed manually by the team (no automated M-Pesa B2C yet).');
 
 } catch (Throwable $e) {
     $db->rollback();

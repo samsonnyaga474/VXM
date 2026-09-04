@@ -21,33 +21,46 @@ if ($token === '') {
     if (!$reset || $reset['used_at'] || strtotime($reset['expires_at']) < time()) {
         $error = 'This password reset link is invalid or has expired.';
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $password = $_POST['password'] ?? '';
-        $confirm = $_POST['confirm_password'] ?? '';
-        if (strlen($password) < PASSWORD_MIN_LENGTH) {
-            $error = 'Password must be at least ' . PASSWORD_MIN_LENGTH . ' characters.';
-        } elseif ($password !== $confirm) {
-            $error = 'Passwords do not match.';
+        if (!verify_csrf()) {
+            $error = 'Invalid security token. Please refresh and try again.';
         } else {
-            $hash = password_hash($password, PASSWORD_DEFAULT);
-            $uid = (int)$reset['user_id'];
-            $stmt = $db->prepare("UPDATE users SET password = ?, updated_at = NOW() WHERE id = ?");
-            $stmt->bind_param('si', $hash, $uid);
-            $stmt->execute();
-            $stmt->close();
+            $password = $_POST['password'] ?? '';
+            $confirm = $_POST['confirm_password'] ?? '';
+            if (strlen($password) < PASSWORD_MIN_LENGTH) {
+                $error = 'Password must be at least ' . PASSWORD_MIN_LENGTH . ' characters.';
+            } elseif ($password !== $confirm) {
+                $error = 'Passwords do not match.';
+            } else {
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $uid = (int)$reset['user_id'];
+                $stmt = $db->prepare("UPDATE users SET password = ?, updated_at = NOW() WHERE id = ?");
+                $stmt->bind_param('si', $hash, $uid);
+                $stmt->execute();
+                $stmt->close();
 
-            $rid = (int)$reset['id'];
-            $stmt = $db->prepare("UPDATE password_resets SET used_at = NOW() WHERE id = ?");
-            $stmt->bind_param('i', $rid);
-            $stmt->execute();
-            $stmt->close();
+                $rid = (int)$reset['id'];
+                $stmt = $db->prepare(
+                    "UPDATE password_resets SET used_at = NOW() WHERE id = ? AND used_at IS NULL"
+                );
+                $stmt->bind_param('i', $rid);
+                $stmt->execute();
+                if ($stmt->affected_rows !== 1) {
+                    $stmt->close();
+                    $error = 'This password reset link is invalid or has already been used.';
+                } else {
+                    $stmt->close();
+                    $stmt = $db->prepare("DELETE FROM password_resets WHERE user_id = ? AND id != ?");
+                    $stmt->bind_param('ii', $uid, $rid);
+                    $stmt->execute();
+                    $stmt->close();
 
-            // Invalidate other tokens for this user
-            $stmt = $db->prepare("DELETE FROM password_resets WHERE user_id = ? AND id != ?");
-            $stmt->bind_param('ii', $uid, $rid);
-            $stmt->execute();
-            $stmt->close();
+                    vxm_session_start();
+                    $_SESSION = [];
+                    session_regenerate_id(true);
 
-            redirect('login.html?reset=success');
+                    redirect('login.html?reset=success');
+                }
+            }
         }
     }
 }
@@ -71,13 +84,14 @@ if ($token === '') {
       <p class="text-muted" style="margin-bottom:1.25rem;font-size:0.9rem;">Choose a new password for your account.</p>
       <form method="POST">
         <input type="hidden" name="token" value="<?= e($token) ?>" />
+        <?= csrf_field() ?>
         <div class="form-group">
           <label class="form-label">New password</label>
-          <input type="password" class="form-input" name="password" minlength="<?= PASSWORD_MIN_LENGTH ?>" required />
+          <input type="password" class="form-input" name="password" minlength="<?= PASSWORD_MIN_LENGTH ?>" required autocomplete="new-password" />
         </div>
         <div class="form-group">
           <label class="form-label">Confirm password</label>
-          <input type="password" class="form-input" name="confirm_password" minlength="<?= PASSWORD_MIN_LENGTH ?>" required />
+          <input type="password" class="form-input" name="confirm_password" minlength="<?= PASSWORD_MIN_LENGTH ?>" required autocomplete="new-password" />
         </div>
         <button type="submit" class="btn btn-primary" style="width:100%;">Update password</button>
       </form>

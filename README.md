@@ -278,6 +278,7 @@ VXM ships with both a ready-to-import setup script and versioned migrations:
 - `database/vxm_setup.sql` — full schema for a fresh install
 - `migrations/001_schema.sql` — base schema (tables, keys, indexes)
 - `migrations/002_integrity_constraints.sql` — additional integrity constraints
+- `migrations/003_admin_audit_log.sql` — admin audit trail table
 
 **Core tables**
 
@@ -314,7 +315,7 @@ VXM is built to run on a standard **XAMPP** stack.
    Copy (or clone directly into) `C:\xampp\htdocs\VXM` so it's served at `http://localhost/VXM`.
 3. **Start Apache and MySQL** from the XAMPP Control Panel.
 4. **Create the database**
-   Open phpMyAdmin (`http://localhost/phpmyadmin`), create a database named `vxm`, and import `database/vxm_setup.sql` (or run the scripts in `migrations/` in order).
+   Open phpMyAdmin (`http://localhost/phpmyadmin`), create a database named `vxm`, then import `database/vxm_setup.sql` **or** run `migrations/001_schema.sql`, `migrations/002_integrity_constraints.sql`, and `migrations/003_admin_audit_log.sql` in that order.
 5. **Configure environment variables**
    Copy `.env.example` to `.env` in the project root and adjust values as needed. The default values already match a fresh XAMPP install (empty MySQL password, database name `vxm`).
    ```bash
@@ -366,7 +367,8 @@ VXM/
 │
 ├── migrations/
 │   ├── 001_schema.sql
-│   └── 002_integrity_constraints.sql
+│   ├── 002_integrity_constraints.sql
+│   └── 003_admin_audit_log.sql
 │
 ├── mpesa/
 │   └── callback.php        # Daraja STK callback endpoint
@@ -423,21 +425,27 @@ A `readme-assets/screenshots/` folder is reserved for interface screenshots, but
 
 - Registration, login, session-based authentication
 - Earning levels, daily tasks, task-reward crediting
-- Referral system with configurable percentage-based bonuses
-- Wallet with transactional, row-locked balance updates
+- Referral system with configurable percentage-based bonuses (claim-before-credit to prevent double pay)
+- Wallet with transactional, row-locked balance updates and corrected ledger parameter binding
 - Full transaction ledger
-- M-Pesa STK Push deposits + signed callback crediting
-- Development-mode simulated deposits
-- Withdrawal request → admin approve/reject workflow
+- M-Pesa STK Push deposits + callback crediting (idempotent status transitions)
+- Development-mode simulated deposits (never in production)
+- Withdrawal request → admin approve/reject workflow (full hold including fee refunded on reject)
+- Admin audit log for approve/reject withdrawals
 - Full admin panel (users, levels, tasks, deposits, withdrawals, transactions, support, referrals)
 - In-app notifications
 - Support ticketing system
-- Password reset flow
-- CSRF protection, rate-limited login, security headers
+- Password reset flow (CSRF-protected reset form)
+- CSRF protection on app POSTs, rate-limited login, security headers
+- Floating Dynamic Island public navbar + favicon
+
+**Hosting note**
+
+- [GitHub Pages](https://samsonnyaga474.github.io/VXM/) serves the **static marketing HTML only**. PHP, MySQL, wallet, login, deposits, and admin **do not run** on GitHub Pages. Use XAMPP locally or a PHP-capable host for the full app.
 
 **🧩 Planned**
 
-- Automated M-Pesa B2C payout on withdrawal approval
+- Automated M-Pesa B2C (Business-to-Customer) payout on withdrawal approval
 - CSRF token on the static `login.html` / `register.html` forms
 - Backend endpoint for `contact.html`
 - Rate limiting / CAPTCHA on registration

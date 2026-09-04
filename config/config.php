@@ -30,9 +30,16 @@ if (is_readable($envFile)) {
 // Environment: 'development' or 'production'
 define('VXM_ENV', getenv('VXM_ENV') ?: 'development');
 
-// Simulated M-Pesa deposits (dev only). Must be false in production.
-// Simulated deposits are ONLY allowed when VXM_ENV=development AND this is true.
-define('ALLOW_SIMULATED_DEPOSITS', (getenv('ALLOW_SIMULATED_DEPOSITS') === 'true') || (VXM_ENV === 'development' && getenv('ALLOW_SIMULATED_DEPOSITS') !== 'false'));
+// Simulated M-Pesa deposits: ONLY when VXM_ENV is development.
+// Even if ALLOW_SIMULATED_DEPOSITS=true is set in the environment, production never allows it.
+define(
+    'ALLOW_SIMULATED_DEPOSITS',
+    VXM_ENV === 'development'
+        && (
+            getenv('ALLOW_SIMULATED_DEPOSITS') === 'true'
+            || (getenv('ALLOW_SIMULATED_DEPOSITS') === false || getenv('ALLOW_SIMULATED_DEPOSITS') === '')
+        )
+);
 
 // Database
 define('DB_HOST', getenv('DB_HOST') ?: 'localhost');

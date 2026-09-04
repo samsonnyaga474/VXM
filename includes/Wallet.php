@@ -227,8 +227,10 @@ class Wallet
              (user_id, type, amount, balance_before, balance_after, status, reference, description, meta, related_id, created_by)
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
+        // Types must match args: i,s,d,d,d,s,s,s,s,i,i
+        // (meta is JSON string; related_id and created_by are nullable ints)
         $stmt->bind_param(
-            'isdddsssisi',
+            'isdddssssii',
             $userId, $type, $amount, $before, $after, $status,
             $reference, $description, $metaJson, $relatedId, $createdBy
         );

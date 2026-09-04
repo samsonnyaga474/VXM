@@ -89,47 +89,73 @@ try {
 
 $_SESSION['level_id'] = $level_id;
 
-// Referral bonus trigger: 5% of the purchased level price (REFERRAL_PERCENTAGE)
+// Referral bonus: percentage of purchased level price (REFERRAL_PERCENTAGE).
+// Claim the pending row under lock first so concurrent retries cannot double-pay.
 if (REFERRAL_BONUS_TRIGGER === 'on_level_purchase') {
-    $stmt = $db->prepare(
-        "SELECT id, referrer_id, bonus FROM referrals
-         WHERE referred_user_id = ? AND status = 'pending' LIMIT 1"
-    );
-    $stmt->bind_param('i', $user_id);
-    $stmt->execute();
-    $ref = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
-    if ($ref) {
-        // Calculate bonus as percentage of the level the referred user just purchased
-        $bonus_amount = round($level_price * (REFERRAL_PERCENTAGE / 100.0), 2);
-        if ($bonus_amount > 0) {
-            try {
-                $wallet = new Wallet($db);
-                $txId = $wallet->credit(
-                    (int)$ref['referrer_id'],
-                    $bonus_amount,
-                    'referral_bonus',
-                    'Referral bonus (' . REFERRAL_PERCENTAGE . '% of ' . money($level_price) . ') for user #' . $user_id,
-                    null,
-                    (int)$ref['id']
-                );
-                $stmt = $db->prepare(
-                    "UPDATE referrals SET bonus = ?, status='paid', qualified_at=NOW(), paid_at=NOW(), transaction_id=? WHERE id=? AND status='pending'"
-                );
-                $stmt->bind_param('dii', $bonus_amount, $txId, $ref['id']);
+    $db->begin_transaction();
+    try {
+        $stmt = $db->prepare(
+            "SELECT id, referrer_id FROM referrals
+             WHERE referred_user_id = ? AND status = 'pending' LIMIT 1 FOR UPDATE"
+        );
+        $stmt->bind_param('i', $user_id);
+        $stmt->execute();
+        $ref = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        if (!$ref) {
+            $db->commit();
+        } else {
+            $bonus_amount = round($level_price * (REFERRAL_PERCENTAGE / 100.0), 2);
+            $refId = (int)$ref['id'];
+
+            if ($bonus_amount <= 0) {
+                $stmt = $db->prepare("UPDATE referrals SET status='cancelled' WHERE id=? AND status='pending'");
+                $stmt->bind_param('i', $refId);
                 $stmt->execute();
                 $stmt->close();
-                notify_user((int)$ref['referrer_id'], 'referral_bonus', 'Referral Bonus',
-                    'You received ' . money($bonus_amount) . ' for a successful referral.');
-            } catch (Throwable $e) {
-                // leave pending for retry
+                $db->commit();
+            } else {
+                // Claim before credit so a second request cannot also pay
+                $stmt = $db->prepare(
+                    "UPDATE referrals SET status='paid', bonus=?, qualified_at=NOW()
+                     WHERE id=? AND status='pending'"
+                );
+                $stmt->bind_param('di', $bonus_amount, $refId);
+                $stmt->execute();
+                $claimed = $stmt->affected_rows === 1;
+                $stmt->close();
+                $db->commit();
+
+                if ($claimed) {
+                    try {
+                        $wallet = new Wallet($db);
+                        $txId = $wallet->credit(
+                            (int)$ref['referrer_id'],
+                            $bonus_amount,
+                            'referral_bonus',
+                            'Referral bonus (' . REFERRAL_PERCENTAGE . '% of ' . money($level_price) . ') for user #' . $user_id,
+                            null,
+                            $refId
+                        );
+                        $stmt = $db->prepare(
+                            "UPDATE referrals SET paid_at=NOW(), transaction_id=? WHERE id=?"
+                        );
+                        $stmt->bind_param('ii', $txId, $refId);
+                        $stmt->execute();
+                        $stmt->close();
+                        notify_user((int)$ref['referrer_id'], 'referral_bonus', 'Referral Bonus',
+                            'You received ' . money($bonus_amount) . ' for a successful referral.');
+                    } catch (Throwable $e) {
+                        // Row already claimed; log for manual reconciliation if credit failed
+                        error_log('VXM referral credit failed for referral #' . $refId . ': ' . $e->getMessage());
+                    }
+                }
             }
-        } else {
-            $stmt = $db->prepare("UPDATE referrals SET status='cancelled' WHERE id=?");
-            $stmt->bind_param('i', $ref['id']);
-            $stmt->execute();
-            $stmt->close();
         }
+    } catch (Throwable $e) {
+        $db->rollback();
+        error_log('VXM referral claim failed: ' . $e->getMessage());
     }
 }
 

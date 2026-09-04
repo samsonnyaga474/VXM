@@ -40,40 +40,73 @@ if (!$mpesa->isConfigured()) {
             json_response(['error' => $e->getMessage()], 400);
         }
 
+        // Single transaction only — do NOT call Wallet::credit() here (it opens its own
+        // transaction and nested mysqli commits are unsafe).
         $db->begin_transaction();
         try {
+            $uid = (int)$user['id'];
             $stmt = $db->prepare(
                 "INSERT INTO deposits (user_id, amount, phone, status)
                  VALUES (?, ?, ?, 'pending')"
             );
-            $stmt->bind_param('ids', $user['id'], $amount, $normalized);
+            $stmt->bind_param('ids', $uid, $amount, $normalized);
             $stmt->execute();
             $depositId = (int)$stmt->insert_id;
             $stmt->close();
 
-            // Simulate success in development
-            $wallet = new Wallet($db);
-            $txId = $wallet->credit(
-                $user['id'],
-                $amount,
-                'deposit',
-                'Simulated deposit (dev mode)',
-                'DEV' . time(),
-                $depositId
+            $stmt = $db->prepare(
+                "SELECT wallet_balance, total_deposits FROM users WHERE id = ? LIMIT 1 FOR UPDATE"
             );
+            $stmt->bind_param('i', $uid);
+            $stmt->execute();
+            $urow = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            if (!$urow) {
+                throw new RuntimeException('User not found');
+            }
+
+            $before = (float)$urow['wallet_balance'];
+            $after = $before + $amount;
+            $totalDep = (float)$urow['total_deposits'] + $amount;
+
+            $stmt = $db->prepare(
+                "UPDATE users SET wallet_balance = ?, total_deposits = ?, updated_at = NOW() WHERE id = ?"
+            );
+            $stmt->bind_param('ddi', $after, $totalDep, $uid);
+            if (!$stmt->execute()) {
+                throw new RuntimeException('Failed wallet credit');
+            }
+            $stmt->close();
+
+            $type = 'deposit';
+            $st = 'completed';
+            $desc = 'Simulated deposit (dev mode)';
+            $receipt = 'DEV' . $depositId . '_' . time();
+            $stmt = $db->prepare(
+                "INSERT INTO transactions
+                 (user_id, type, amount, balance_before, balance_after, status, reference, description, related_id)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+            $stmt->bind_param('isdddsssi', $uid, $type, $amount, $before, $after, $st, $receipt, $desc, $depositId);
+            if (!$stmt->execute()) {
+                throw new RuntimeException('Failed ledger insert');
+            }
+            $txId = (int)$stmt->insert_id;
+            $stmt->close();
 
             $stmt = $db->prepare(
                 "UPDATE deposits SET status='completed', mpesa_receipt=?, transaction_id=?, completed_at=NOW()
-                 WHERE id=?"
+                 WHERE id=? AND status='pending'"
             );
-            $receipt = 'DEV' . time();
             $stmt->bind_param('sii', $receipt, $txId, $depositId);
-            $stmt->execute();
+            if (!$stmt->execute() || $stmt->affected_rows !== 1) {
+                throw new RuntimeException('Deposit finalize failed');
+            }
             $stmt->close();
 
             $db->commit();
 
-            notify_user($user['id'], 'deposit', 'Deposit Successful (Dev)', 'Simulated credit of ' . money($amount));
+            notify_user($uid, 'deposit', 'Deposit Successful (Dev)', 'Simulated credit of ' . money($amount));
 
             json_response([
                 'success' => true,
