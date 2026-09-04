@@ -15,6 +15,9 @@ function layout_header(string $title, string $active = 'dashboard'): void {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#030712" />
+  <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="icon" href="images/favicon-16.png" type="image/png" sizes="16x16" />
+  <link rel="apple-touch-icon" href="images/favicon-180.png" sizes="180x180" />
   <title><?= e($title) ?> | VXM</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,9 +31,8 @@ function layout_header(string $title, string $active = 'dashboard'): void {
     <!-- Sidebar -->
     <aside class="dash-sidebar" id="dashSidebar">
       <div class="sidebar-brand">
-        <a href="dashboard.php" class="nav-logo">
-          <img src="images/logo.jpg" alt="" onerror="this.style.display='none'" />
-          <span>VXM</span>
+        <a href="dashboard.php" class="nav-logo" title="VXM Dashboard">
+          <img src="images/logo.jpg" alt="VXM" onerror="this.style.display='none'" />
         </a>
       </div>
       <nav class="sidebar-nav">
