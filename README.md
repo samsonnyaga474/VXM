@@ -92,6 +92,26 @@ VXM combines a modern futuristic interface with a PHP/MySQL backend, a full admi
 
 ---
 
+
+## 🎨 Design System & Final Homepage Experience
+
+See [`DESIGN.md`](./DESIGN.md) for the full system.
+
+**Homepage motion (final)**
+- VXM Energy Core (CSS 3D + canvas particles)
+- Mouse tracking (local parallax / tilt) coordinated with scroll
+- Scroll-driven narrative: core rotation, translation, scale, opacity respond to scroll progress over the first ~1100px
+- Unified RAF loop blends mouse + scroll so systems do not fight
+- Intersection Observer section reveals
+- Native smooth anchors (no global scroll hijack)
+- Mobile: no mouse tracking, reduced particles, intentional simplified depth
+- Reduced-motion: all continuous animation disabled, content remains fully usable
+
+**Surfaces**
+Public pages have consistent page heroes. Auth uses premium shell. User app and admin share polished cards, hierarchy, badges and tables.
+
+No GSAP / Lenis / Three.js required for the delivered experience.
+
 ## 🧠 How VXM Works
 
 <div align="center">
