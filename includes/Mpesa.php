@@ -201,19 +201,27 @@ class Mpesa
             $raw = json_encode($payload);
 
             if ($resultCode === '0') {
-                // Success – extract receipt
+                // Success – extract receipt and reported amount
                 $receipt = null;
+                $callbackAmount = null;
                 $items = $body['CallbackMetadata']['Item'] ?? [];
                 foreach ($items as $item) {
-                    if (($item['Name'] ?? '') === 'MpesaReceiptNumber') {
+                    $name = $item['Name'] ?? '';
+                    if ($name === 'MpesaReceiptNumber') {
                         $receipt = $item['Value'] ?? null;
-                        break;
+                    }
+                    if ($name === 'Amount') {
+                        $callbackAmount = isset($item['Value']) ? (float)$item['Value'] : null;
                     }
                 }
 
                 // Credit wallet INLINE (same transaction — no nested Wallet::credit)
                 $uid = (int)$deposit['user_id'];
                 $amt = (float)$deposit['amount'];
+                // Never credit a different amount than the stored deposit.
+                if ($callbackAmount !== null && abs($callbackAmount - $amt) > 0.009) {
+                    throw new RuntimeException('Callback amount does not match stored deposit');
+                }
                 $depId = (int)$deposit['id'];
 
                 $stmt = $db->prepare(

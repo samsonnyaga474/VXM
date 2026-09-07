@@ -13,4 +13,7 @@ ErrorDocument 500 /500.php
   RewriteRule ^includes/ - [F,L]
   RewriteRule ^storage/ - [F,L]
   RewriteRule ^migrations/ - [F,L]
+  RewriteRule ^tests/ - [F,L]
+  RewriteRule ^\.env - [F,L]
+  RewriteRule ^BUSINESS_DECISIONS\.md$ - [F,L]
 </IfModule>

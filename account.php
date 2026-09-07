@@ -7,7 +7,7 @@ $user_id = $user['id'];
 $db = db();
 
 $stmt = $db->prepare(
-    "SELECT full_name, email, phone, referral_code, created_at FROM users WHERE id = ? LIMIT 1"
+    "SELECT full_name, email, phone, referral_code, COALESCE(xp,0) AS xp, created_at FROM users WHERE id = ? LIMIT 1"
 );
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
@@ -106,6 +106,12 @@ layout_header('Account', 'account');
         <label class="form-label">Referral code</label>
         <input type="text" class="form-input" value="<?= e($u['referral_code']) ?>" readonly />
       </div>
+      <div class="form-group">
+        <label class="form-label">XP / Points</label>
+        <input type="text" class="form-input" value="<?= number_format((int)($u['xp'] ?? 0)) ?>" readonly />
+        <p class="form-hint">Progress points. Separate from wallet balance.</p>
+      </div>
+
       <button type="submit" class="btn btn-primary">Save profile</button>
     </form>
   </div>

@@ -48,7 +48,7 @@ if ((int)$today_count >= $daily_limit) {
     redirect('tasks.php?error=daily_limit');
 }
 
-$stmt = $db->prepare("SELECT id, title, reward, level_id, status FROM tasks WHERE id = ? LIMIT 1");
+$stmt = $db->prepare("SELECT id, title, reward, COALESCE(xp_reward, 0) AS xp_reward, level_id, status FROM tasks WHERE id = ? LIMIT 1");
 $stmt->bind_param('i', $task_id);
 $stmt->execute();
 $task = $stmt->get_result()->fetch_assoc();
@@ -84,7 +84,7 @@ $db->begin_transaction();
 try {
     // Lock user row
     $stmt = $db->prepare(
-        "SELECT wallet_balance, total_earnings FROM users WHERE id = ? LIMIT 1 FOR UPDATE"
+        "SELECT wallet_balance, total_earnings, COALESCE(xp, 0) AS xp FROM users WHERE id = ? LIMIT 1 FOR UPDATE"
     );
     $stmt->bind_param('i', $user_id);
     $stmt->execute();
@@ -123,6 +123,9 @@ try {
     $before = (float)$u['wallet_balance'];
     $after = $before + $reward;
     $totalEarnings = (float)$u['total_earnings'] + $reward;
+    $xpAward = (int)($task['xp_reward'] ?? 0);
+    $xpBefore = (int)$u['xp'];
+    $xpAfter = $xpBefore + $xpAward;
 
     $stmt = $db->prepare(
         "INSERT INTO user_tasks (user_id, task_id, reward_earned) VALUES (?, ?, ?)"
@@ -134,13 +137,28 @@ try {
     $stmt->close();
 
     $stmt = $db->prepare(
-        "UPDATE users SET wallet_balance = ?, total_earnings = ?, updated_at = NOW() WHERE id = ?"
+        "UPDATE users SET wallet_balance = ?, total_earnings = ?, xp = ?, updated_at = NOW() WHERE id = ?"
     );
-    $stmt->bind_param('ddi', $after, $totalEarnings, $user_id);
+    $stmt->bind_param('ddii', $after, $totalEarnings, $xpAfter, $user_id);
     if (!$stmt->execute()) {
         throw new RuntimeException('balance');
     }
     $stmt->close();
+
+    // XP ledger (only if XP awarded)
+    if ($xpAward > 0) {
+        $xpSource = 'task';
+        $xpDesc = 'Task XP: ' . $task['title'];
+        $stmt = $db->prepare(
+            "INSERT INTO xp_ledger (user_id, amount, balance_after, source, reference_id, description)
+             VALUES (?, ?, ?, ?, ?, ?)"
+        );
+        $stmt->bind_param('iiisis', $user_id, $xpAward, $xpAfter, $xpSource, $task_id, $xpDesc);
+        if (!$stmt->execute()) {
+            throw new RuntimeException('xp_ledger');
+        }
+        $stmt->close();
+    }
 
     $type = 'task_reward';
     $status = 'completed';
@@ -175,5 +193,10 @@ try {
     redirect('tasks.php?error=failed');
 }
 
-notify_user($user_id, 'task_completed', 'Task Completed', 'You earned ' . money($reward) . ' for "' . $task['title'] . '".');
+$msg = 'You earned ' . money($reward);
+if (!empty($xpAward) && $xpAward > 0) {
+    $msg .= ' and ' . $xpAward . ' XP';
+}
+$msg .= ' for "' . $task['title'] . '".';
+notify_user($user_id, 'task_completed', 'Task Completed', $msg);
 redirect('tasks.php?completed=success');

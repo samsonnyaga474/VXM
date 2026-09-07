@@ -46,7 +46,7 @@ $progress_pct = $daily_limit > 0 ? min(100, round(($today_completed / $daily_lim
 $tasks = [];
 if ($level_id > 0) {
     $stmt = $db->prepare(
-        "SELECT t.id, t.title, t.description, t.reward, t.status,
+        "SELECT t.id, t.title, t.description, t.reward, COALESCE(t.xp_reward, 0) AS xp_reward, t.task_type, t.status,
                 CASE WHEN ut.id IS NOT NULL THEN 1 ELSE 0 END AS done_today
          FROM tasks t
          LEFT JOIN user_tasks ut ON ut.task_id = t.id AND ut.user_id = ? AND DATE(ut.completed_at) = CURDATE()
@@ -65,7 +65,7 @@ if ($level_id > 0) {
 $flash = '';
 $flashType = 'info';
 if (isset($_GET['completed']) && $_GET['completed'] === 'success') {
-    $flash = 'Task completed. Reward has been added to your wallet.';
+    $flash = 'Task completed. Reward and XP have been added to your account.';
     $flashType = 'success';
 }
 if (isset($_GET['error'])) {
@@ -109,7 +109,7 @@ layout_header('Tasks', 'tasks');
   <div class="panel-header">
     <div>
       <h2 class="panel-title"><?= e($level_name) ?> · Daily missions</h2>
-      <p class="text-muted" style="font-size:0.85rem;margin-top:0.25rem;">Rewards are calculated and paid on the server.</p>
+      <p class="text-muted" style="font-size:0.85rem;margin-top:0.25rem;">Rewards and XP are calculated on the server. Completing a task records your confirmation that you finished the listed activity. VXM does not independently verify external watch/read/visit actions.</p>
     </div>
   </div>
   <div style="margin-bottom:0.5rem;display:flex;justify-content:space-between;font-size:0.9rem;">
@@ -134,9 +134,17 @@ layout_header('Tasks', 'tasks');
         <div class="task-item <?= $done ? 'completed' : '' ?>">
           <div class="task-meta">
             <h4><?= e($t['title']) ?></h4>
-            <p><?= e($t['description'] ?: ($done ? 'Completed today' : 'Ready to complete')) ?></p>
+            <p><?= e($t['description'] ?: ($done ? 'Completed today' : 'Ready to confirm completion')) ?></p>
+            <?php if (!empty($t['task_type'])): ?>
+              <p class="text-muted" style="font-size:0.75rem;margin-top:0.25rem;">Type: <?= e($t['task_type']) ?> · User-confirmed</p>
+            <?php endif; ?>
           </div>
-          <div class="task-reward">+<?= money((float)$t['reward']) ?></div>
+          <div class="task-reward">
+            +<?= money((float)$t['reward']) ?>
+            <?php if ((int)($t['xp_reward'] ?? 0) > 0): ?>
+              <span class="task-xp">+<?= (int)$t['xp_reward'] ?> XP</span>
+            <?php endif; ?>
+          </div>
           <?php if ($done): ?>
             <span class="badge badge-success">Completed</span>
           <?php elseif ($remaining <= 0): ?>
@@ -145,7 +153,7 @@ layout_header('Tasks', 'tasks');
             <form method="POST" action="complete-task.php" style="margin:0;">
               <?= csrf_field() ?>
               <input type="hidden" name="task_id" value="<?= (int)$t['id'] ?>" />
-              <button type="submit" class="btn btn-primary btn-sm">Complete</button>
+              <button type="submit" class="btn btn-primary btn-sm">Complete Task</button>
             </form>
           <?php endif; ?>
         </div>

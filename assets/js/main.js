@@ -45,7 +45,7 @@
     onScroll();
   }
 
-  // Reveal on scroll
+  // Reveal on scroll — mobile-friendly (looser margin, force already-visible)
   const reveals = document.querySelectorAll('.reveal');
   if (reveals.length && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(
@@ -57,9 +57,17 @@
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' }
     );
-    reveals.forEach(function (el) { io.observe(el); });
+    reveals.forEach(function (el) {
+      // If already in (or near) viewport on load, show immediately
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+        el.classList.add('visible');
+      } else {
+        io.observe(el);
+      }
+    });
   } else {
     reveals.forEach(function (el) { el.classList.add('visible'); });
   }

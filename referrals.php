@@ -14,7 +14,7 @@ $stmt->close();
 
 $referral_code = $u['referral_code'];
 $baseUrl = rtrim(APP_URL, '/');
-$referral_link = $baseUrl . '/register.html?ref=' . urlencode($referral_code);
+$referral_link = $baseUrl . '/register.php?ref=' . urlencode($referral_code);
 
 /* Stats */
 $stmt = $db->prepare("SELECT COUNT(*) FROM referrals WHERE referrer_id = ?");

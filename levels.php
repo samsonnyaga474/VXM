@@ -79,8 +79,8 @@ layout_header('Levels', 'levels');
         <?php if (!empty($lv['description'])): ?>
           <p class="text-muted" style="font-size:0.9rem;margin-top:0.4rem;"><?= e($lv['description']) ?></p>
         <?php endif; ?>
-        <div class="price"><?= money((float)$lv['price']) ?></div>
-        <ul>
+        <div class="level-price"><?= money((float)$lv['price']) ?></div>
+        <ul class="level-features">
           <li><i class="bi bi-check2"></i> <?= (int)$lv['daily_tasks'] ?> daily tasks</li>
           <li><i class="bi bi-check2"></i> Referral bonus: <?= money((float)$lv['referral_bonus']) ?></li>
         </ul>

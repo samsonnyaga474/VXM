@@ -12,13 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = trim($_POST['title'] ?? '');
         $desc = trim($_POST['description'] ?? '');
         $reward = (float)($_POST['reward'] ?? 0);
+        $xp_reward = max(0, (int)($_POST['xp_reward'] ?? 0));
         $status = $_POST['status'] === 'inactive' ? 'inactive' : 'active';
         if ($id > 0) {
-            $stmt = $db->prepare("UPDATE tasks SET level_id=?, title=?, description=?, reward=?, status=? WHERE id=?");
-            $stmt->bind_param('issdsi', $level_id, $title, $desc, $reward, $status, $id);
+            $stmt = $db->prepare("UPDATE tasks SET level_id=?, title=?, description=?, reward=?, xp_reward=?, status=? WHERE id=?");
+            $stmt->bind_param('issdisi', $level_id, $title, $desc, $reward, $xp_reward, $status, $id);
         } else {
-            $stmt = $db->prepare("INSERT INTO tasks (level_id, title, description, reward, status) VALUES (?,?,?,?,?)");
-            $stmt->bind_param('issds', $level_id, $title, $desc, $reward, $status);
+            $stmt = $db->prepare("INSERT INTO tasks (level_id, title, description, reward, xp_reward, status) VALUES (?,?,?,?,?,?)");
+            $stmt->bind_param('issdis', $level_id, $title, $desc, $reward, $xp_reward, $status);
         }
         $stmt->execute();
         $stmt->close();
@@ -48,7 +49,8 @@ admin_header('Tasks', 'tasks');
     <input type="hidden" name="action" value="save" />
     <input type="hidden" name="id" id="tskId" value="0" />
     <div class="form-group"><label class="form-label">Title</label><input class="form-input" name="title" id="tskTitle" required /></div>
-    <div class="form-group"><label class="form-label">Reward</label><input type="number" step="0.01" class="form-input" name="reward" id="tskReward" required /></div>
+    <div class="form-group"><label class="form-label">Reward (KES)</label><input type="number" step="0.01" class="form-input" name="reward" id="tskReward" required /></div>
+    <div class="form-group"><label class="form-label">XP Reward</label><input type="number" step="1" min="0" class="form-input" name="xp_reward" id="tskXp" value="0" /></div>
     <div class="form-group"><label class="form-label">Level</label>
       <select class="form-input" name="level_id" id="tskLevel">
         <option value="0">Any / none</option>
@@ -68,7 +70,7 @@ admin_header('Tasks', 'tasks');
     <?php foreach ($tasks as $t): ?>
       <div class="tx-row">
         <div class="tx-info">
-          <div class="tx-desc"><?= e($t['title']) ?> · <?= money((float)$t['reward']) ?></div>
+          <div class="tx-desc"><?= e($t['title']) ?> · <?= money((float)$t['reward']) ?> · <?= (int)($t['xp_reward'] ?? 0) ?> XP</div>
           <div class="tx-date"><?= e($t['level_name'] ?? 'No level') ?> · <?= e($t['status']) ?></div>
         </div>
         <button type="button" class="btn btn-ghost btn-sm" onclick='editTask(<?= json_encode($t) ?>)'>Edit</button>
@@ -81,6 +83,7 @@ function editTask(t) {
   document.getElementById('tskId').value = t.id;
   document.getElementById('tskTitle').value = t.title;
   document.getElementById('tskReward').value = t.reward;
+  var xpEl = document.getElementById('tskXp'); if (xpEl) xpEl.value = t.xp_reward || 0;
   document.getElementById('tskLevel').value = t.level_id || 0;
   document.getElementById('tskStatus').value = t.status;
   document.getElementById('tskDesc').value = t.description || '';

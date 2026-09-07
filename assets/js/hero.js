@@ -116,8 +116,17 @@
           io.unobserve(entry.target);
         }
       });
-    }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
-    reveals.forEach(function(el){ io.observe(el); });
+    }, {threshold:0.08, rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(function(el){
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+        el.classList.add('visible');
+        const s = el.closest('[data-story]');
+        if (s) s.classList.add('in-view');
+      } else {
+        io.observe(el);
+      }
+    });
   } else {
     reveals.forEach(function(el){ el.classList.add('visible'); });
   }

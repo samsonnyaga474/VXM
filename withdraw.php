@@ -15,7 +15,7 @@ $user_id = $user['id'];
 $amount = (float)($_POST['amount'] ?? 0);
 $phone = preg_replace('/\D+/', '', trim($_POST['phone'] ?? ''));
 
-if ($amount < MIN_WITHDRAWAL) {
+if (!is_finite($amount) || $amount < MIN_WITHDRAWAL || $amount > 1000000) {
     redirect('withdraw-page.php?error=min_amount');
 }
 if ($phone === '') {

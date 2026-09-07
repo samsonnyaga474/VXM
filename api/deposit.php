@@ -19,7 +19,7 @@ require_csrf();
 $amount = (float)($_POST['amount'] ?? 0);
 $phone  = trim($_POST['phone'] ?? '');
 
-if ($amount < MIN_DEPOSIT) {
+if (!is_finite($amount) || $amount < MIN_DEPOSIT || $amount > 1000000) {
     json_response(['error' => 'Minimum deposit is ' . money(MIN_DEPOSIT)], 400);
 }
 

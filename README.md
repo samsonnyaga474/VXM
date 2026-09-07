@@ -243,7 +243,7 @@ Sensitive configuration such as database credentials and payment credentials sho
 
 In the interest of accuracy, these are known limitations in the current codebase — not hidden, and worth knowing before any production deployment:
 
-- The static marketing pages `login.html` and `register.html` submit directly to `login.php` / `register.php` without a CSRF token field, unlike the authenticated in-app forms.
+- The static marketing pages `login.html` and `register.php` submit directly to `login.php` / `register.php` without a CSRF token field, unlike the authenticated in-app forms.
 - `contact.html` is currently a front-end-only form (JavaScript stub) with no server-side endpoint processing submissions yet.
 - There is no CAPTCHA or IP-based rate limiting on the public registration endpoint (login already has rate limiting).
 - Withdrawal "approval" is a status/ledger change only — see [Withdrawals](#-withdrawals--how-they-actually-work) — there is no automated M-Pesa B2C payout yet.
@@ -417,7 +417,7 @@ VXM/
 ├── withdraw-page.php           # Withdrawal request page/view
 │
 ├── index.html / about.html / earn.html / levels.html / referrals.html
-├── login.html / register.html / forgot-password.html
+├── login.html / register.php / forgot-password.html
 ├── contact.html / privacy.html / terms.html   # Static marketing/legal pages
 ├── login.php / register.php / logout.php
 ├── forgot-password.php / reset-password.php
@@ -466,7 +466,7 @@ A `readme-assets/screenshots/` folder is reserved for interface screenshots, but
 **🧩 Planned**
 
 - Automated M-Pesa B2C (Business-to-Customer) payout on withdrawal approval
-- CSRF token on the static `login.html` / `register.html` forms
+- CSRF token on the static `login.html` / `register.php` forms
 - Backend endpoint for `contact.html`
 - Rate limiting / CAPTCHA on registration
 - Formal `LICENSE` file
@@ -496,3 +496,38 @@ No license file is currently present in this repository. Until one is added, all
 **VXM** — Turn your time into earnings.
 
 </div>
+---
+
+## XP / Points System (added)
+
+XP is a **progress metric separate from wallet money**.
+
+- `users.xp` — accumulated XP
+- `tasks.xp_reward` — XP awarded on valid task completion
+- `xp_ledger` — full audit trail of XP changes
+
+**There is no automatic conversion of XP into Kenyan shillings.**  
+Monetary rewards and XP are recorded independently. Any future relationship between XP and financial eligibility must be defined as an explicit business rule and implemented accordingly.
+
+### New migrations
+
+```bash
+mysql -u USER -p DBNAME < migrations/004_xp_system.sql
+mysql -u USER -p DBNAME < migrations/005_populate_tasks.sql
+```
+
+Migration 005 populates a substantial, level-specific task pool for Starter, Growth and Pro so the Tasks page is not empty after a user joins a level.
+
+### Task monetary rewards
+
+Original repository contained sample task rewards and descriptive “target daily earnings” text in level descriptions.  
+The values seeded in migration 005 are **configurable approximations** aligned with those targets and the daily task limits. They are not a hard-coded earning formula. Admins can edit any task’s reward and XP through the admin panel.
+
+### Legal pages
+
+- `privacy.html` — expanded with Kenya Data Protection Act context and placeholders
+- `terms.html` — existing
+- `cookies.html` — new (essential cookies only)
+- `refund.html` — new (structure + business-decision placeholders)
+
+Replace all `[INSERT VERIFIED ...]` placeholders with real business details before production.

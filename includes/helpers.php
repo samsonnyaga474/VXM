@@ -79,10 +79,19 @@ function is_ajax_request(): bool {
 /**
  * Authentication helpers
  */
+function app_href(string $path): string {
+    $path = ltrim($path, '/');
+    $script = str_replace('\\', '/', (string)($_SERVER['SCRIPT_NAME'] ?? ''));
+    if (str_contains($script, '/admin/')) {
+        return '../' . $path;
+    }
+    return $path;
+}
+
 function require_login(): array {
     vxm_session_start();
     if (empty($_SESSION['logged_in']) || empty($_SESSION['user_id'])) {
-        header('Location: login.html?error=login_required');
+        header('Location: ' . app_href('login.html?error=login_required'));
         exit;
     }
     return [
@@ -97,7 +106,7 @@ function require_login(): array {
 function require_admin(): array {
     $user = require_login();
     if (empty($user['is_admin'])) {
-        header('Location: dashboard.php');
+        header('Location: ' . app_href('dashboard.php'));
         exit;
     }
     return $user;
@@ -169,6 +178,38 @@ function clear_login_attempts(string $email): void {
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $stmt->close();
+}
+
+/**
+ * Registration rate limit — reuse login_attempts with a distinct email key.
+ */
+function record_register_attempt(string $email, string $ip): void {
+    $key = 'reg:' . $email;
+    $db = db();
+    $stmt = $db->prepare("INSERT INTO login_attempts (email, ip_address) VALUES (?, ?)");
+    $stmt->bind_param('ss', $key, $ip);
+    $stmt->execute();
+    $stmt->close();
+}
+
+function is_register_rate_limited(string $email, string $ip): bool {
+    $db = db();
+    $minutes = LOGIN_LOCKOUT_MINUTES;
+    $max = LOGIN_MAX_ATTEMPTS;
+    $key = 'reg:' . $email;
+
+    $stmt = $db->prepare(
+        "SELECT COUNT(*) FROM login_attempts
+         WHERE (email = ? OR ip_address = ?)
+         AND attempted_at > DATE_SUB(NOW(), INTERVAL ? MINUTE)"
+    );
+    $stmt->bind_param('ssi', $key, $ip, $minutes);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+
+    return (int)$count >= $max;
 }
 
 /**

@@ -9,7 +9,8 @@ $db = db();
 /* ---- Fresh user data ---- */
 $stmt = $db->prepare(
     "SELECT id, full_name, email, phone, referral_code, level_id,
-            wallet_balance, total_earnings, total_withdrawals, total_deposits, status, created_at
+            wallet_balance, total_earnings, total_withdrawals, total_deposits,
+            COALESCE(xp, 0) AS xp, status, created_at
      FROM users WHERE id = ? LIMIT 1"
 );
 $stmt->bind_param('i', $user_id);
@@ -27,6 +28,7 @@ $wallet_balance    = (float)$u['wallet_balance'];
 $total_earnings    = (float)$u['total_earnings'];
 $total_withdrawals = (float)$u['total_withdrawals'];
 $total_deposits    = (float)$u['total_deposits'];
+$user_xp           = (int)$u['xp'];
 $level_id          = (int)($u['level_id'] ?? 0);
 $referral_code     = $u['referral_code'];
 $full_name         = $u['full_name'];
@@ -139,6 +141,10 @@ if (isset($_GET['message'])) {
         [$msg, $msgType] = $map[$_GET['message']];
     }
 }
+if (isset($_GET['registered']) && $_GET['registered'] === '1') {
+    $msg = 'Account created. Choose a level to unlock tasks.';
+    $msgType = 'success';
+}
 if (isset($_GET['withdraw']) && $_GET['withdraw'] === 'success') {
     $msg = 'Withdrawal request submitted. It is pending review.';
     $msgType = 'success';
@@ -175,6 +181,11 @@ layout_header('Dashboard', 'dashboard');
     <div class="label">Total Earnings</div>
     <div class="value"><?= money($total_earnings) ?></div>
     <div class="sub">Lifetime: <?= money($today_earnings) ?></div>
+  </div>
+  <div class="stat-card">
+    <div class="label">XP / Points</div>
+    <div class="value"><?= number_format($user_xp) ?></div>
+    <div class="sub">Progress points (separate from money)</div>
   </div>
   <div class="stat-card">
     <div class="label">Current Level</div>
